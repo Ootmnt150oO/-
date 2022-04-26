@@ -1,12 +1,12 @@
 /*
- * Generated using BlocklyDuino:
- *
- * https://github.com/MediaTek-Labs/BlocklyDuino-for-LinkIt
- *
- * Date: Tue, 22 Feb 2022 00:57:36 GMT
- */
- //kGJFlQzbM0forJxWuWJ9X
- //dg9vobE1GU8xoQytmm0bt1
+   Generated using BlocklyDuino:
+
+   https://github.com/MediaTek-Labs/BlocklyDuino-for-LinkIt
+
+   Date: Tue, 22 Feb 2022 00:57:36 GMT
+*/
+//kGJFlQzbM0forJxWuWJ9X
+//dg9vobE1GU8xoQytmm0bt1
 //c90ff898
 //49ae65b9
 #include <SPI.h>
@@ -30,13 +30,13 @@ String ifft[10];
 MFRC522 rfid(/*SS_PIN*/ 10, /*RST_PIN*/ 9);
 char _lwifi_ssid[] = "E3-6";
 char _lwifi_pass[] = "520...521";
-String lineToken="";
+String lineToken = "";
 void sendLineMsg(String myMsg) {
   static TLSClient line_client;
-  myMsg.replace("%","%25");
-  myMsg.replace("&","%26");
-  myMsg.replace("§","&");
-  myMsg.replace("\\n","\n");
+  myMsg.replace("%", "%25");
+  myMsg.replace("&", "%26");
+  myMsg.replace("§", "&");
+  myMsg.replace("\\n", "\n");
   if (line_client.connect("notify-api.line.me", 443)) {
     line_client.println("POST /api/notify HTTP/1.1");
     line_client.println("Connection: close");
@@ -63,65 +63,65 @@ void invokeIFTTT(const String& key, const String& event, const String& p1, const
   // This is the root certificate(CA) for https://maker.ifttt.com/
   // Different host server may use different root CA.
   static const char rootCA[] = "-----BEGIN CERTIFICATE-----\r\n"
-  "MIIFJjCCBA6gAwIBAgIIRJxbLJxAihkwDQYJKoZIhvcNAQELBQAwgbQxCzAJBgNV\r\n"
-  "BAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQHEwpTY290dHNkYWxlMRow\r\n"
-  "GAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjEtMCsGA1UECxMkaHR0cDovL2NlcnRz\r\n"
-  "LmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvMTMwMQYDVQQDEypHbyBEYWRkeSBTZWN1\r\n"
-  "cmUgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwHhcNMTYwNzI1MTc0NTM4WhcN\r\n"
-  "MTgwOTI4MjIxMzU0WjA5MSEwHwYDVQQLExhEb21haW4gQ29udHJvbCBWYWxpZGF0\r\n"
-  "ZWQxFDASBgNVBAMMCyouaWZ0dHQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\r\n"
-  "MIIBCgKCAQEA8c1HRaRBFWER/SG2eXN++ykWLSoCyJ1xcxOXy15Bk57WXGLIBZHn\r\n"
-  "Y8/SN+H1KuUcN40KC35NuGhaQP43cELcBSG/BiYTlFPIAizauX2K9VZh+zWhwkgq\r\n"
-  "y8bJ5+yvZKH5gwqNL248Y4gjwaPeU8o2K1xrFYWSfM/7kFQFul2goWOA3HIn5qE3\r\n"
-  "NUsgxF8uLh2BSuJKQF73WDvM1zE86MIU20M9+PEo/pV5orIPZX/54cAZgXnr+59t\r\n"
-  "KPL14Rl9qqTiptMJC8y2CIqKC9zHBwIwX4uYPOquom1oqAuItWgqAJwtC3z5a20r\r\n"
-  "wbI2eNbDPdbeweT/4RtCjTwKlQuHmzeLbwIDAQABo4IBtDCCAbAwDAYDVR0TAQH/\r\n"
-  "BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDgYDVR0PAQH/BAQD\r\n"
-  "AgWgMDcGA1UdHwQwMC4wLKAqoCiGJmh0dHA6Ly9jcmwuZ29kYWRkeS5jb20vZ2Rp\r\n"
-  "ZzJzMS0yNzMuY3JsMF0GA1UdIARWMFQwSAYLYIZIAYb9bQEHFwEwOTA3BggrBgEF\r\n"
-  "BQcCARYraHR0cDovL2NlcnRpZmljYXRlcy5nb2RhZGR5LmNvbS9yZXBvc2l0b3J5\r\n"
-  "LzAIBgZngQwBAgEwdgYIKwYBBQUHAQEEajBoMCQGCCsGAQUFBzABhhhodHRwOi8v\r\n"
-  "b2NzcC5nb2RhZGR5LmNvbS8wQAYIKwYBBQUHMAKGNGh0dHA6Ly9jZXJ0aWZpY2F0\r\n"
-  "ZXMuZ29kYWRkeS5jb20vcmVwb3NpdG9yeS9nZGlnMi5jcnQwHwYDVR0jBBgwFoAU\r\n"
-  "QMK9J47MNIMwojPX+2yz8LQsgM4wIQYDVR0RBBowGIILKi5pZnR0dC5jb22CCWlm\r\n"
-  "dHR0LmNvbTAdBgNVHQ4EFgQUTv/uQ1GFjIW3WdcM3sn8fwtzoKQwDQYJKoZIhvcN\r\n"
-  "AQELBQADggEBAA0L5s4DXdeyx2rsVKljSq7CsDUbl1w8AgyxO0o1JAdYoPwZOlUT\r\n"
-  "Yl6xL+jYtlgdINAOi/SDsEXtTQSMNb6xrGN0AfPgCRlKEBSEIluiRQc97H/AOmwp\r\n"
-  "6HVeMQm/BVdQtp+i9MauwKJclB7ljReS0vlqMfk5FnlD3AT9eT61HUGcBVuyR37p\r\n"
-  "vbHP2yRg+5uZnw5BqUOL1Y0asuK0vqlizllpRxikq9kMKsR8KaesRyHkVX/FAC9u\r\n"
-  "uxxYke0T3f+dGlGzxm/ly6g5gQVbjdZGeoNma8qXjJ9o5BhZuAll7SajSLiXWERu\r\n"
-  "n4PtYxVA4KsvJNDabHea1zF3pGyKzv7HAUc=\r\n"
-  "-----END CERTIFICATE-----\r\n";
+                               "MIIFJjCCBA6gAwIBAgIIRJxbLJxAihkwDQYJKoZIhvcNAQELBQAwgbQxCzAJBgNV\r\n"
+                               "BAYTAlVTMRAwDgYDVQQIEwdBcml6b25hMRMwEQYDVQQHEwpTY290dHNkYWxlMRow\r\n"
+                               "GAYDVQQKExFHb0RhZGR5LmNvbSwgSW5jLjEtMCsGA1UECxMkaHR0cDovL2NlcnRz\r\n"
+                               "LmdvZGFkZHkuY29tL3JlcG9zaXRvcnkvMTMwMQYDVQQDEypHbyBEYWRkeSBTZWN1\r\n"
+                               "cmUgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwHhcNMTYwNzI1MTc0NTM4WhcN\r\n"
+                               "MTgwOTI4MjIxMzU0WjA5MSEwHwYDVQQLExhEb21haW4gQ29udHJvbCBWYWxpZGF0\r\n"
+                               "ZWQxFDASBgNVBAMMCyouaWZ0dHQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\r\n"
+                               "MIIBCgKCAQEA8c1HRaRBFWER/SG2eXN++ykWLSoCyJ1xcxOXy15Bk57WXGLIBZHn\r\n"
+                               "Y8/SN+H1KuUcN40KC35NuGhaQP43cELcBSG/BiYTlFPIAizauX2K9VZh+zWhwkgq\r\n"
+                               "y8bJ5+yvZKH5gwqNL248Y4gjwaPeU8o2K1xrFYWSfM/7kFQFul2goWOA3HIn5qE3\r\n"
+                               "NUsgxF8uLh2BSuJKQF73WDvM1zE86MIU20M9+PEo/pV5orIPZX/54cAZgXnr+59t\r\n"
+                               "KPL14Rl9qqTiptMJC8y2CIqKC9zHBwIwX4uYPOquom1oqAuItWgqAJwtC3z5a20r\r\n"
+                               "wbI2eNbDPdbeweT/4RtCjTwKlQuHmzeLbwIDAQABo4IBtDCCAbAwDAYDVR0TAQH/\r\n"
+                               "BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDgYDVR0PAQH/BAQD\r\n"
+                               "AgWgMDcGA1UdHwQwMC4wLKAqoCiGJmh0dHA6Ly9jcmwuZ29kYWRkeS5jb20vZ2Rp\r\n"
+                               "ZzJzMS0yNzMuY3JsMF0GA1UdIARWMFQwSAYLYIZIAYb9bQEHFwEwOTA3BggrBgEF\r\n"
+                               "BQcCARYraHR0cDovL2NlcnRpZmljYXRlcy5nb2RhZGR5LmNvbS9yZXBvc2l0b3J5\r\n"
+                               "LzAIBgZngQwBAgEwdgYIKwYBBQUHAQEEajBoMCQGCCsGAQUFBzABhhhodHRwOi8v\r\n"
+                               "b2NzcC5nb2RhZGR5LmNvbS8wQAYIKwYBBQUHMAKGNGh0dHA6Ly9jZXJ0aWZpY2F0\r\n"
+                               "ZXMuZ29kYWRkeS5jb20vcmVwb3NpdG9yeS9nZGlnMi5jcnQwHwYDVR0jBBgwFoAU\r\n"
+                               "QMK9J47MNIMwojPX+2yz8LQsgM4wIQYDVR0RBBowGIILKi5pZnR0dC5jb22CCWlm\r\n"
+                               "dHR0LmNvbTAdBgNVHQ4EFgQUTv/uQ1GFjIW3WdcM3sn8fwtzoKQwDQYJKoZIhvcN\r\n"
+                               "AQELBQADggEBAA0L5s4DXdeyx2rsVKljSq7CsDUbl1w8AgyxO0o1JAdYoPwZOlUT\r\n"
+                               "Yl6xL+jYtlgdINAOi/SDsEXtTQSMNb6xrGN0AfPgCRlKEBSEIluiRQc97H/AOmwp\r\n"
+                               "6HVeMQm/BVdQtp+i9MauwKJclB7ljReS0vlqMfk5FnlD3AT9eT61HUGcBVuyR37p\r\n"
+                               "vbHP2yRg+5uZnw5BqUOL1Y0asuK0vqlizllpRxikq9kMKsR8KaesRyHkVX/FAC9u\r\n"
+                               "uxxYke0T3f+dGlGzxm/ly6g5gQVbjdZGeoNma8qXjJ9o5BhZuAll7SajSLiXWERu\r\n"
+                               "n4PtYxVA4KsvJNDabHea1zF3pGyKzv7HAUc=\r\n"
+                               "-----END CERTIFICATE-----\r\n";
 
   // We must set root CA before connecting to host
   // Note that the lenght includes the terminating NULL,
   // so use sizeof() instead of strlen().
   client.setRootCA(rootCA, sizeof(rootCA));
   if (client.connect("maker.ifttt.com", 443)) {
-      // Make a HTTP request over SSL (HTTPS)
+    // Make a HTTP request over SSL (HTTPS)
 
-      const String payload = String() + "{\"value1\":\"" + p1
-                        + "\",\"value2\":\"" + p2
-                        + "\",\"value3\":\"" + p3
-                        + "\"}";
+    const String payload = String() + "{\"value1\":\"" + p1
+                           + "\",\"value2\":\"" + p2
+                           + "\",\"value3\":\"" + p3
+                           + "\"}";
 
-      const String url = String() + "https://maker.ifttt.com/trigger/" + event + "/with/key/" + key;
+    const String url = String() + "https://maker.ifttt.com/trigger/" + event + "/with/key/" + key;
 
-      client.println(String() + "POST " + url + " HTTP/1.1");
-      client.println("Host: maker.ifttt.com");
-      client.println("User-Agent: BlocklyDuino/1.0");
-      client.println("Content-Type: application/json;charset=utf-8");
-      client.print("Content-Length: ");
-      client.println(payload.length());
-      client.println("User-Agent: BlocklyDuino/1.0");
-      client.println("Accept: */*");
-      client.println("Connection: close");
+    client.println(String() + "POST " + url + " HTTP/1.1");
+    client.println("Host: maker.ifttt.com");
+    client.println("User-Agent: BlocklyDuino/1.0");
+    client.println("Content-Type: application/json;charset=utf-8");
+    client.print("Content-Length: ");
+    client.println(payload.length());
+    client.println("User-Agent: BlocklyDuino/1.0");
+    client.println("Accept: */*");
+    client.println("Connection: close");
 
-      client.println();
-      client.print(payload);
+    client.println();
+    client.print(payload);
 
-      client.println();
-      delay(300);
+    client.println();
+    delay(300);
   } else {
     // Serial.println("failed to connect to IFTTT");
   }
@@ -130,16 +130,16 @@ void invokeIFTTT(const String& key, const String& event, const String& p1, const
   // if there are incoming bytes available
   // from the server, read them and print them:
   while (client.available()) {
-      char c = client.read();
-      // Serial.print(c);
-      delay(1);
+    char c = client.read();
+    // Serial.print(c);
+    delay(1);
   }
 
   // if the server's disconnected, stop the client:
   if (!client.connected()) {
-      //Serial.println();
-      //Serial.println("disconnecting from server passively.");
-      client.stop();
+    //Serial.println();
+    //Serial.println("disconnecting from server passively.");
+    client.stop();
   } else {
     // otherwise we actively stop the connection. we'll reconnect next time.
     //Serial.println("disconnecting from server.");
@@ -148,23 +148,23 @@ void invokeIFTTT(const String& key, const String& event, const String& p1, const
 }
 String mfrc522_readID()
 {
-String ret;
-if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial())
-{
-MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
+  String ret;
+  if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial())
+  {
+    MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
 
-for (byte i = 0; i < rfid.uid.size; i++) {
-ret += (rfid.uid.uidByte[i] < 0x10 ? "0" : "");
-ret += String(rfid.uid.uidByte[i], HEX);
-}
-}
+    for (byte i = 0; i < rfid.uid.size; i++) {
+      ret += (rfid.uid.uidByte[i] < 0x10 ? "0" : "");
+      ret += String(rfid.uid.uidByte[i], HEX);
+    }
+  }
 
-// Halt PICC
-rfid.PICC_HaltA();
+  // Halt PICC
+  rfid.PICC_HaltA();
 
-// Stop encryption on PCD
-rfid.PCD_StopCrypto1();
-return ret;
+  // Stop encryption on PCD
+  rfid.PCD_StopCrypto1();
+  return ret;
 }
 
 void setup()
@@ -177,112 +177,114 @@ void setup()
   buttom = 6;
   error = 0;
   eng = 16;
-SPI.begin();
-rfid.PCD_Init();
-lcd_i2c.begin(16, 2);
-lcd_i2c.backlight();
-lcd_i2c.setCursor(0,0);
-lcd_i2c.clear();
-pinMode(bee,OUTPUT);
-pinMode(buttom,INPUT);
-ser.attach(eng,544,2400);
- while (WiFi.begin(_lwifi_ssid, _lwifi_pass) != WL_CONNECTED) { delay(1000); 
- Serial.println("Wifi 尚未連接");}
- Serial.println("Wifi 已連上");
-     invokeIFTTT("kGJFlQzbM0forJxWuWJ9X", "database", "門禁系統已啟動", "", "");
-  lineToken="bIfh1FNIbn9DoqQ38PswedM2qXvXx0ktEdoC2pYwy20";
+  SPI.begin();
+  rfid.PCD_Init();
+  lcd_i2c.begin(16, 2);
+  lcd_i2c.backlight();
+  lcd_i2c.setCursor(0, 0);
+  lcd_i2c.clear();
+  pinMode(bee, OUTPUT);
+  pinMode(buttom, INPUT);
+  ser.attach(eng, 544, 2400);
+  while (WiFi.begin(_lwifi_ssid, _lwifi_pass) != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Wifi 尚未連接");
+  }
+  Serial.println("Wifi 已連上");
+  invokeIFTTT("kGJFlQzbM0forJxWuWJ9X", "database", "門禁系統已啟動", "", "");
+  lineToken = "bIfh1FNIbn9DoqQ38PswedM2qXvXx0ktEdoC2pYwy20";
 }
 
 void loop()
 {
-  if(digitalRead(buttom) == 1){
-    while(digitalRead(buttom) == 1);
-    if(setmod){
+  if (digitalRead(buttom) == 1) {
+    while (digitalRead(buttom) == 1);
+    if (setmod) {
       setmod = false;
       Serial.println("已經退出設置模式");
       lcd_i2c.print("Setting Mode OFF");
     }
-     else {
+    else {
       setmod = true;
       Serial.println("已經進入設置模式");
       lcd_i2c.print("Setting Mode ON");
-     }
-    digitalWrite(bee,1);
+    }
+    digitalWrite(bee, 1);
   }
   read_id = mfrc522_readID();
-  if(read_id != ""){
-     if(setmod){
-      if(total<10){
-        if(!hasCard(ids,read_id)){
-         ids[total] = read_id;
-        total++; 
-        Serial.println("卡片ID:"+read_id+" 添加成功");
-         ifft[point] = "卡片："+ read_id+"已經添加為通行證";
-         point++;
-         sendLineMsg(String("message=\n")+" 卡片ID:"+read_id+" 已經添加為通行證");
-        lcd_i2c.print("Card ADD Success");
-        digitalWrite(bee,1);
-        }else{
+  if (read_id != "") {
+    if (setmod) {
+      if (total < 10) {
+        if (!hasCard(ids, read_id)) {
+          ids[total] = read_id;
+          total++;
+          Serial.println("卡片ID:" + read_id + " 添加成功");
+          ifft[point] = "卡片：" + read_id + "已經添加為通行證";
+          point++;
+          sendLineMsg(String("message=\n") + " 卡片ID:" + read_id + " 已經添加為通行證");
+          lcd_i2c.print("Card ADD Success");
+          digitalWrite(bee, 1);
+        } else {
           lcd_i2c.print("Card Is Exists!");
-          Serial.println("卡片ID:"+read_id+" 已經存在了");
-          digitalWrite(bee,1);
+          Serial.println("卡片ID:" + read_id + " 已經存在了");
+          digitalWrite(bee, 1);
         }
-      }else{
+      } else {
         lcd_i2c.print("Card Is Full!");
         Serial.println("密碼已經到達了最大限制無法繼續添加");
-        digitalWrite(bee,1);
+        digitalWrite(bee, 1);
       }
-    }else{
-      if(hasCard(ids,read_id)){
-        Serial.println("卡片ID:"+read_id+"  驗證成功已打開大門");
-        sendLineMsg(String("message=\n")+" 卡片ID:"+read_id+" 打開了大門");
-        ifft[point] = "卡片："+ read_id+"打開了大門";
-         point++;
+    } else {
+      if (hasCard(ids, read_id)) {
+        Serial.println("卡片ID:" + read_id + "  驗證成功已打開大門");
+        sendLineMsg(String("message=\n") + " 卡片ID:" + read_id + " 打開了大門");
+        ifft[point] = "卡片：" + read_id + "打開了大門";
+        point++;
         lcd_i2c.print("Door OPEN!");
-        digitalWrite(bee,1);
+        digitalWrite(bee, 1);
         delay(200);
-        digitalWrite(bee,0);
+        digitalWrite(bee, 0);
         delay(200);
-        digitalWrite(bee,1);
+        digitalWrite(bee, 1);
         delay(200);
-        digitalWrite(bee,0);
+        digitalWrite(bee, 0);
         delay(200);
-         error = 0;
+        error = 0;
         //TODO 伺服馬達轉動
         ser.write(180);
         delay(2000);
         ser.write(0);
-      }else{
-        Serial.println("卡片ID:"+read_id+"  嘗試想要進入大門");
+      } else {
+        Serial.println("卡片ID:" + read_id + "  嘗試想要進入大門");
         lcd_i2c.print("Password Error!");
-         digitalWrite(bee,1);
-         error++;
-         ifft[point] = "卡片："+ read_id+"嘗試打開大門";
-         point++;
-         if(error >=3){
-          for(int i = 0; i <4; i ++){
-          digitalWrite(bee,1);
-           delay(200);
-          digitalWrite(bee,0);
-          delay(200);
-            }
-            error = 0;
-            //TODO 發送訊息到LINE
-            sendLineMsg(String("message=\n")+" 警告! 卡片ID:"+read_id+" 多次嘗試想要進入大門");
-            ifft[point] = "卡片："+ read_id+"多次嘗試打開大門";
-            point++;
-         }
+        digitalWrite(bee, 1);
+        error++;
+        ifft[point] = "卡片：" + read_id + "嘗試打開大門";
+        point++;
+        if (error >= 3) {
+          for (int i = 0; i < 4; i ++) {
+            digitalWrite(bee, 1);
+            delay(200);
+            digitalWrite(bee, 0);
+            delay(200);
+          }
+          error = 0;
+          //TODO 發送訊息到LINE
+          sendLineMsg(String("message=\n") + " 警告! 卡片ID:" + read_id + " 多次嘗試想要進入大門");
+          ifft[point] = "卡片：" + read_id + "多次嘗試打開大門";
+          point++;
+        }
       }
     }
   }
   showIfft();
- delay(1000);
- digitalWrite(bee,0);
- lcd_i2c.clear();
+  delay(1000);
+  digitalWrite(bee, 0);
+  lcd_i2c.clear();
 }
-bool hasCard(String a[],String card){
-  for(int i = 0; i < 10; i++){
-    if(card.equals(a[i])) return true;
+bool hasCard(String a[], String card) {
+  for (int i = 0; i < 10; i++) {
+    if (card.equals(a[i])) return true;
   }
   return false;
 }
@@ -291,15 +293,15 @@ bool hasCard(String a[],String card){
 //  for ( uint8_t i = 0; i < sizeof( myArray ) / sizeof( char * ); i++ )
 //    if ( !strcmp( key, myArray[i] ) )
 //      return i;
-//      
+//
 //  return -1;
 //}
-void showIfft(){
-  for(int i = 0;i<10;i++){
-    if(ifft[i] == "") break;
+void showIfft() {
+  for (int i = 0; i < 10; i++) {
+    if (ifft[i] == "") break;
     invokeIFTTT("kGJFlQzbM0forJxWuWJ9X", "database", ifft[i], "", "");
     ifft[i] = "";
-    
+
   }
   point = 0;
 }
